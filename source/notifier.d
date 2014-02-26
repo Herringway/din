@@ -4,12 +4,13 @@ private {
 	import notifymyandroid;
 	import toasty;
 	import prowl;
+	import faast;
 }
 
 private import std.exception;
 private import std.datetime;
 
-enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl };
+enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl, Faast };
 class Din {
 	Notifier[] notifiers;
 
@@ -35,6 +36,9 @@ class Din {
 		switch (service) {
 			case pushService.Pushover: notifier = new Pushover; break;
 			case pushService.NotifyMyAndroid: notifier = new NotifyMyAndroid; break;
+			case pushService.Toasty: notifier = new Toasty; break;
+			case pushService.Prowl: notifier = new Prowl; break;
+			case pushService.Faast: notifier = new Faast; break;
 			default: throw new Exception("Unsupported service");
 		}
 		notifier.setTargets(targets);

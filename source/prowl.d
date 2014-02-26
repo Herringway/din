@@ -8,7 +8,7 @@ private import std.algorithm : min, max;
 private import notifier;
 
 
-class prowl : Notifier {
+class Prowl : Notifier {
 	private string[] targets;
 	private string _APIKey;
 	@property string APIKey(string key) {

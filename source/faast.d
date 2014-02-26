@@ -1,4 +1,4 @@
-module toasty;
+module faast;
 
 private import std.uri;
 private import std.string;
@@ -6,7 +6,7 @@ private import std.net.curl;
 private import notifier;
 
 
-class Toasty : Notifier {
+class Faast : Notifier {
 	private string[] targets;
 	private string _APIKey;
 	@property string APIKey(string key) {
@@ -18,10 +18,11 @@ class Toasty : Notifier {
 	void send(notification toSend) {
 		auto client = HTTP();
 		client.verifyPeer(false);
-		client.addRequestHeader("Content-Type", "multipart/form-data");
 		foreach (id; targets) {
-			auto postData = ["title":toSend.title, "sender":toSend.apptitle, "text":toSend.message];
-			post(format("http://api.supertoasty.com/notify/%s", id), format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
+			auto postData = ["user_credentials":id, "notification[title]":toSend.title, "notification[subtitle]":toSend.apptitle, "notification[message]":toSend.message, "notification[long_message]":toSend.message];
+			if (_APIKey != _APIKey.init)
+				postData["providerkey"] = _APIKey;
+			post("https://www.appnotifications.com/account/notifications.json", format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
 		}
 	}
 	@property bool needsAPIKey() {
