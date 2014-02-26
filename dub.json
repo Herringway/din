@@ -1,0 +1,9 @@
+{
+	"name": "din",
+	"description": "D interface for various push notification services",
+	"copyright": "Copyright © 2014, Cameron",
+	"authors": ["Cameron \"Herringway\" Ross"],
+	"license": "MIT",
+	"targetType": "library",
+	"homepage": "https://github.com/Herringway/din"
+}
