@@ -1,10 +1,15 @@
 module notifier;
-private import pushover;
-private import notifymyandroid;
+private {
+	import pushover;
+	import notifymyandroid;
+	import toasty;
+	import prowl;
+}
+
 private import std.exception;
 private import std.datetime;
 
-enum pushService { Pushover, NotifyMyAndroid };
+enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl };
 class Din {
 	Notifier[] notifiers;
 
