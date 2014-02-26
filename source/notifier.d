@@ -35,35 +35,6 @@ class Din {
 		notifier.setTargets(targets);
 		return notifier;
 	}
-	deprecated {
-		string[][pushService] targetIDs;
-		string[pushService] APIKeys;
-		string apptitle;
-		public void send(string title, string message) {
-			Notifier[] tmpNotifiers;
-			with (pushService) {
-				if (Pushover in targetIDs) {
-					auto PushoverNotifier = createNotifier(Pushover, targetIDs[Pushover]);
-					PushoverNotifier.APIKey = APIKeys[Pushover];
-					tmpNotifiers ~= PushoverNotifier;
-				}
-				if (NotifyMyAndroid in targetIDs)
-					tmpNotifiers ~= createNotifier(NotifyMyAndroid, targetIDs[NotifyMyAndroid]);
-			}
-			auto toSend = notification();
-			toSend.message = message;
-			toSend.title = title;
-			toSend.apptitle = apptitle;
-			foreach (notifier; tmpNotifiers)
-				notifier.send(toSend);
-		}
-		public void setAPIKey(pushService service, string id) {
-			APIKeys[service] = id;
-		}
-		public void addDeviceKey(pushService service, string key) {
-			targetIDs[service] ~= key;
-		}
-	}
 }
 interface Notifier {
 	void send(notification toSend);

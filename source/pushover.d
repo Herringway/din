@@ -35,8 +35,3 @@ class Pushover : Notifier {
 		return true;
 	}
 }
-void sendPushoverMessage(string APIKey, string userSecret, string title, string message) {
-	auto client = HTTP();
-	client.verifyPeer(false);
-	auto content = post("https://api.pushover.net/1/messages.json", format("token=%s&user=%s&message=%s", APIKey, userSecret, message).encode(), client);
-}

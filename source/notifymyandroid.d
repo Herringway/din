@@ -30,8 +30,3 @@ class NotifyMyAndroid : Notifier {
 		return false;
 	}
 }
-void sendNMAMessage(string[] targetkeys, string appname, string event, string message, string url = "", int priority = 0) {
-	auto client = HTTP();
-	client.verifyPeer(false);
-	auto content = post("https://www.notifymyandroid.com/publicapi/notify", format("apikey=%s&application=%s&event=%s&description=%s&priority=%s&url=%s", targetkeys.join(","), appname, event, message, priority, url).encode(), client);
-}
