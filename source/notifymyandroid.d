@@ -3,7 +3,6 @@ module notifymyandroid;
 private import std.uri;
 private import std.string;
 private import std.net.curl;
-private import std.stdio;
 private import notifier;
 private import std.conv : text;
 private import std.algorithm : min, max;
