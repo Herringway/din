@@ -1,4 +1,4 @@
-module notifier;
+module din;
 private {
 	import pushover;
 	import notifymyandroid;
@@ -9,6 +9,7 @@ private {
 
 private import std.exception;
 private import std.datetime;
+private import std.string : format;
 
 enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl, Faast };
 class Din {
@@ -31,7 +32,7 @@ class Din {
 	}
 	private Notifier createNotifier(pushService service, string[] targets) {
 		if (targets.length == 0)
-			throw new Exception("No targets specified");
+			throw new Exception(format("%s: No targets specified", service));
 		Notifier notifier;
 		switch (service) {
 			case pushService.Pushover: notifier = new Pushover; break;

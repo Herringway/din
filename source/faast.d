@@ -3,7 +3,7 @@ module faast;
 private import std.uri;
 private import std.string;
 private import std.net.curl;
-private import notifier;
+private import din;
 
 
 class Faast : Notifier {

@@ -5,7 +5,7 @@ private import std.string;
 private import std.net.curl;
 private import std.conv : text;
 private import std.algorithm : min, max;
-private import notifier;
+private import din;
 
 
 class Prowl : Notifier {
