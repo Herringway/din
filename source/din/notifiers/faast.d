@@ -2,7 +2,6 @@ module din.notifiers.faast;
 
 private import din;
 
-
 class Faast : Notifier {
 	private string[] targets;
 	private string _APIKey;

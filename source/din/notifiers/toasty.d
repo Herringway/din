@@ -2,7 +2,6 @@ module din.notifiers.toasty;
 
 private import din;
 
-
 class Toasty : Notifier {
 	private string[] targets;
 	private string _APIKey;

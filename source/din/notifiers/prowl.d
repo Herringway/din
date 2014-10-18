@@ -2,7 +2,6 @@ module din.notifiers.prowl;
 
 private import din;
 
-
 class Prowl : Notifier {
 	private string[] targets;
 	private string _APIKey;

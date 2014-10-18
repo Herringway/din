@@ -7,10 +7,6 @@ private {
 	import din.notifiers.faast;
 }
 
-private import std.exception;
-private import std.datetime;
-private import std.string : format;
-
 enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl, Faast };
 class Din {
 	Notifier[] notifiers;
@@ -31,6 +27,7 @@ class Din {
 		notifiers ~= notifier;
 	}
 	private Notifier createNotifier(pushService service, string[] targets) {
+		import std.string : format;
 		if (targets.length == 0)
 			throw new Exception(format("%s: No targets specified", service));
 		Notifier notifier;
@@ -53,6 +50,7 @@ interface Notifier {
 	@property string APIKey(string key);
 }
 struct notification {
+	import std.datetime : SysTime;
 	string title;
 	string apptitle;
 	string message;
