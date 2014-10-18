@@ -8,10 +8,10 @@ private {
 }
 
 enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl, Faast };
-class Din {
+public class Din {
 	Notifier[] notifiers;
 
-	public void send(notification toSend) {
+	public void send(Notification toSend) {
 		foreach (notifier; notifiers)
 			notifier.send(toSend);
 	}
@@ -43,18 +43,29 @@ class Din {
 		return notifier;
 	}
 }
-interface Notifier {
+package interface Notifier {
 	void send(notification toSend);
 	void setTargets(string[] targets);
 	@property bool needsAPIKey();
 	@property string APIKey(string key);
 }
-struct notification {
+/**
+ * Struct containing notification data. Fill in as much as possible for best
+ * results. Note that not all services are guaranteed to support all fields.
+ */
+struct Notification {
 	import std.datetime : SysTime;
-	string title;
-	string apptitle;
-	string message;
-	string url;
-	byte priority = 0;
-	SysTime time;
+	string Title;
+	deprecated alias title = Title;
+	string AppTitle;
+	deprecated alias apptitle = AppTitle;
+	string Message;
+	deprecated alias message = Message;
+	string URL;
+	deprecated alias url = URL;
+	byte Priority = 0;
+	deprecated alias priority = Priority;
+	SysTime Time;
+	deprecated alias time = Time;
 }
+deprecated("Use Notification instead") alias notification = Notification;

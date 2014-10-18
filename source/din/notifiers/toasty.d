@@ -11,7 +11,7 @@ class Toasty : Notifier {
 	void setTargets(string[] targs) {
 		targets = targs;
 	}
-	void send(notification toSend) {
+	void send(Notification toSend) {
 		import std.uri;
 		import std.string;
 		import std.net.curl;
@@ -19,7 +19,7 @@ class Toasty : Notifier {
 		client.verifyPeer(false);
 		client.addRequestHeader("Content-Type", "multipart/form-data");
 		foreach (id; targets) {
-			auto postData = ["title":toSend.title, "sender":toSend.apptitle, "text":toSend.message];
+			auto postData = ["title":toSend.Title, "sender":toSend.AppTitle, "text":toSend.Message];
 			post(format("http://api.supertoasty.com/notify/%s", id), format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
 		}
 	}

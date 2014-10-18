@@ -11,7 +11,7 @@ class NotifyMyAndroid : Notifier {
 	void setTargets(string[] targs) {
 		targets = targs;
 	}
-	void send(notification toSend) {
+	void send(Notification toSend) {
 		import std.net.curl : post, HTTP;
 		import std.algorithm : min, max;
 		import std.conv : text;
@@ -19,9 +19,9 @@ class NotifyMyAndroid : Notifier {
 		import std.string;
 		auto client = HTTP();
 		client.verifyPeer(false);
-		auto postData = ["apikey":targets.join(","), "event":toSend.title, "application":toSend.apptitle, "description":toSend.message, "priority":text(max(-2, min(2, toSend.priority)))];
-		if (toSend.url != toSend.url.init)
-			postData["url"] = toSend.url;
+		auto postData = ["apikey":targets.join(","), "event":toSend.Title, "application":toSend.AppTitle, "description":toSend.Message, "priority":text(max(-2, min(2, toSend.Priority)))];
+		if (toSend.URL != toSend.URL.init)
+			postData["url"] = toSend.URL;
 		post("https://www.notifymyandroid.com/publicapi/notify", format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
 	}
 	@property bool needsAPIKey() {

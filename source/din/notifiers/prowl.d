@@ -11,7 +11,7 @@ class Prowl : Notifier {
 	void setTargets(string[] targs) {
 		targets = targs;
 	}
-	void send(notification toSend) {
+	void send(Notification toSend) {
 		import std.net.curl : post, HTTP;
 		import std.algorithm : min, max, map;
 		import std.conv : text;
@@ -19,7 +19,7 @@ class Prowl : Notifier {
 		import std.string;
 		auto client = HTTP();
 		client.verifyPeer(false);
-		auto postData = ["apikey":targets.join(","), "event":toSend.title, "application":toSend.apptitle, "description":toSend.message, "url":toSend.url, "priority":text(max(-2, min(2, toSend.priority)))];
+		auto postData = ["apikey":targets.join(","), "event":toSend.Title, "application":toSend.AppTitle, "description":toSend.Message, "url":toSend.URL, "priority":text(max(-2, min(2, toSend.Priority)))];
 		if (_APIKey != _APIKey.init)
 			postData["providerkey"] = _APIKey;
 		post("https://api.prowlapp.com/publicapi/add", format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
