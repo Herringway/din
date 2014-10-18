@@ -6,20 +6,41 @@ private {
 	import din.notifiers.prowl;
 	import din.notifiers.faast;
 }
-
+///Push notification services supported by this library
 enum pushService { Pushover, NotifyMyAndroid, Toasty, Prowl, Faast };
+/**
+ * Interface for preparing notifiers and sending notifications to multiple
+ * services simultaneously.
+ */
 public class Din {
-	Notifier[] notifiers;
-
+	private Notifier[] notifiers;
+	/**
+	 * Sends a notification to all registered notification services and their
+	 * targets.
+	 * Params: toSend = The notification that will be sent out
+	 */
 	public void send(Notification toSend) {
 		foreach (notifier; notifiers)
 			notifier.send(toSend);
 	}
+	/**
+	 * Registers a notification service with this instance.
+	 * Params:
+	 *  service = Type of service to register
+	 *  APIKey = The key that grants this application access to the service
+	 *  targets = Strings identifying the endpoints receiving the notifications
+	 */
 	public void addNotifier(pushService service, string APIKey, string[] targets) {
 		auto notifier = createNotifier(service, targets);
 		notifier.APIKey = APIKey;
 		notifiers ~= notifier;
 	}
+	/**
+	 * Registers a notification service with this instance.
+	 * Params:
+	 *  service = Type of service to register
+	 *  targets = Strings identifying the endpoints receiving the notifications
+	 */
 	public void addNotifier(pushService service, string[] targets) {
 		auto notifier = createNotifier(service, targets);
 		if (notifier.needsAPIKey)
@@ -31,13 +52,12 @@ public class Din {
 		if (targets.length == 0)
 			throw new Exception(format("%s: No targets specified", service));
 		Notifier notifier;
-		switch (service) {
+		final switch (service) {
 			case pushService.Pushover: notifier = new Pushover; break;
 			case pushService.NotifyMyAndroid: notifier = new NotifyMyAndroid; break;
 			case pushService.Toasty: notifier = new Toasty; break;
 			case pushService.Prowl: notifier = new Prowl; break;
 			case pushService.Faast: notifier = new Faast; break;
-			default: throw new Exception("Unsupported service");
 		}
 		notifier.setTargets(targets);
 		return notifier;
