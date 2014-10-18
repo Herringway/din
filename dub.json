@@ -5,6 +5,5 @@
 	"authors": ["Cameron \"Herringway\" Ross"],
 	"license": "MIT",
 	"targetType": "library",
-	"version": "0.1.0",
 	"homepage": "https://github.com/Herringway/din"
 }
