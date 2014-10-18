@@ -1,8 +1,5 @@
-module faast;
+module din.notifiers.faast;
 
-private import std.uri;
-private import std.string;
-private import std.net.curl;
 private import din;
 
 
@@ -16,6 +13,9 @@ class Faast : Notifier {
 		targets = targs;
 	}
 	void send(notification toSend) {
+		import std.net.curl : post, HTTP;
+		import std.uri;
+		import std.string;
 		auto client = HTTP();
 		client.verifyPeer(false);
 		foreach (id; targets) {

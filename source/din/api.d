@@ -1,10 +1,10 @@
-module din;
+module din.api;
 private {
-	import pushover;
-	import notifymyandroid;
-	import toasty;
-	import prowl;
-	import faast;
+	import din.notifiers.pushover;
+	import din.notifiers.notifymyandroid;
+	import din.notifiers.toasty;
+	import din.notifiers.prowl;
+	import din.notifiers.faast;
 }
 
 private import std.exception;

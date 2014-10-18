@@ -1,10 +1,5 @@
-module prowl;
+module din.notifiers.prowl;
 
-private import std.uri;
-private import std.string;
-private import std.net.curl;
-private import std.conv : text;
-private import std.algorithm : min, max;
 private import din;
 
 
@@ -18,6 +13,11 @@ class Prowl : Notifier {
 		targets = targs;
 	}
 	void send(notification toSend) {
+		import std.net.curl : post, HTTP;
+		import std.algorithm : min, max, map;
+		import std.conv : text;
+		import std.uri;
+		import std.string;
 		auto client = HTTP();
 		client.verifyPeer(false);
 		auto postData = ["apikey":targets.join(","), "event":toSend.title, "application":toSend.apptitle, "description":toSend.message, "url":toSend.url, "priority":text(max(-2, min(2, toSend.priority)))];

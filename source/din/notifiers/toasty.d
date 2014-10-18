@@ -1,8 +1,5 @@
-module toasty;
+module din.notifiers.toasty;
 
-private import std.uri;
-private import std.string;
-private import std.net.curl;
 private import din;
 
 
@@ -16,6 +13,9 @@ class Toasty : Notifier {
 		targets = targs;
 	}
 	void send(notification toSend) {
+		import std.uri;
+		import std.string;
+		import std.net.curl;
 		auto client = HTTP();
 		client.verifyPeer(false);
 		client.addRequestHeader("Content-Type", "multipart/form-data");
