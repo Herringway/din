@@ -13,7 +13,7 @@ class Pushover : Notifier {
 	}
 	void send(Notification toSend) {
 		import std.net.curl : post, HTTP;
-		import std.algorithm : min, max, map;
+		import std.algorithm : map;
 		import std.json;
 		import std.conv : text;
 		import std.uri;
@@ -21,7 +21,7 @@ class Pushover : Notifier {
 		auto client = HTTP();
 		client.verifyPeer(false);
 		foreach (id; targets) {
-			auto postData = ["token":_APIKey, "user":id, "message":toSend.Message, "priority":text(max(-1, min(2, toSend.Priority)))];
+			auto postData = ["token":_APIKey, "user":id, "message":toSend.Message, "priority":text(clamp(toSend.Priority, -1, 2))];
 			if (toSend.Time !is toSend.Time.init)
 				postData["timestamp"] = text(toSend.Time.toUnixTime());
 			if (toSend.URL !is toSend.URL.init)

@@ -89,3 +89,11 @@ struct Notification {
 	deprecated alias time = Time;
 }
 deprecated("Use Notification instead") alias notification = Notification;
+
+static if (!__traits(compiles, (clamp(0, 0, 0)))) { //For dmd <= 2.067 compatibility
+	import std.algorithm : min, max;
+	T clamp(T)(T val, T lesser, T greater) {
+		return min(greater, max(lesser, val));
+	}
+} else
+	public import std.algorithm : clamp;
