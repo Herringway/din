@@ -5,7 +5,7 @@ private import din;
 class Toasty : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	@property string APIKey(string key) {
+	@property string apiKey(string key) {
 		return _APIKey = key;
 	}
 	void setTargets(string[] targs) {
@@ -19,7 +19,7 @@ class Toasty : Notifier {
 		client.verifyPeer(false);
 		client.addRequestHeader("Content-Type", "multipart/form-data");
 		foreach (id; targets) {
-			auto postData = ["title":toSend.Title, "sender":toSend.AppTitle, "text":toSend.Message];
+			auto postData = ["title":toSend.title, "sender":toSend.appTitle, "text":toSend.message];
 			post(format("http://api.supertoasty.com/notify/%s", id), format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
 		}
 	}

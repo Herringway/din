@@ -5,7 +5,7 @@ private import din;
 class NotifyMyAndroid : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	@property string APIKey(string key) {
+	@property string apiKey(string key) {
 		return _APIKey = key;
 	}
 	void setTargets(string[] targs) {
@@ -16,11 +16,12 @@ class NotifyMyAndroid : Notifier {
 		import std.conv : text;
 		import std.uri;
 		import std.string;
+		import std.algorithm : clamp;
 		auto client = HTTP();
 		client.verifyPeer(false);
-		auto postData = ["apikey":targets.join(","), "event":toSend.Title, "application":toSend.AppTitle, "description":toSend.Message, "priority":text(clamp(toSend.Priority, -2, 2))];
-		if (toSend.URL != toSend.URL.init)
-			postData["url"] = toSend.URL;
+		auto postData = ["apikey":targets.join(","), "event":toSend.title, "application":toSend.appTitle, "description":toSend.message, "priority":text(clamp(toSend.priority, -2, 2))];
+		if (toSend.url != toSend.url.init)
+			postData["url"] = toSend.url;
 		post("https://www.notifymyandroid.com/publicapi/notify", format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
 	}
 	@property bool needsAPIKey() {
