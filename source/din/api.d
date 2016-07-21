@@ -1,14 +1,4 @@
 module din.api;
-private {
-	import din.notifiers.pushover;
-	import din.notifiers.notifymyandroid;
-	import din.notifiers.toasty;
-	import din.notifiers.prowl;
-	import din.notifiers.faast;
-}
-///Push notification services supported by this library
-enum PushService { pushover, notifyMyAndroid, toasty, prowl, faast };
-deprecated("Use PushService instead") alias pushService = PushService;
 /**
  * Interface for preparing notifiers and sending notifications to multiple
  * services simultaneously.
@@ -31,8 +21,8 @@ public class Din {
 	 *  APIKey = The key that grants this application access to the service
 	 *  targets = Strings identifying the endpoints receiving the notifications
 	 */
-	public void addNotifier(PushService service, string apiKey, string[] targets) {
-		auto notifier = createNotifier(service, targets);
+	public void addNotifier(PushService)(string apiKey, string[] targets) {
+		auto notifier = createNotifier!PushService(targets);
 		notifier.apiKey = apiKey;
 		notifiers ~= notifier;
 	}
@@ -42,24 +32,17 @@ public class Din {
 	 *  service = Type of service to register
 	 *  targets = Strings identifying the endpoints receiving the notifications
 	 */
-	public void addNotifier(PushService service, string[] targets) {
-		auto notifier = createNotifier(service, targets);
+	public void addNotifier(PushService)(string[] targets) {
+		auto notifier = createNotifier!PushService(targets);
 		if (notifier.needsAPIKey)
 			throw new Exception("Unable to create instance of this notifier without an API Key");
 		notifiers ~= notifier;
 	}
-	private Notifier createNotifier(PushService service, string[] targets) {
+	private Notifier createNotifier(PushService)(string[] targets) {
 		import std.string : format;
 		if (targets.length == 0)
-			throw new Exception(format("%s: No targets specified", service));
-		Notifier notifier;
-		final switch (service) {
-			case PushService.pushover: notifier = new Pushover; break;
-			case PushService.notifyMyAndroid: notifier = new NotifyMyAndroid; break;
-			case PushService.toasty: notifier = new Toasty; break;
-			case PushService.prowl: notifier = new Prowl; break;
-			case PushService.faast: notifier = new Faast; break;
-		}
+			throw new Exception(format("%s: No targets specified", typeid(PushService)));
+		Notifier notifier = new PushService;
 		notifier.setTargets(targets);
 		return notifier;
 	}
