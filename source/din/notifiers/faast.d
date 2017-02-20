@@ -12,16 +12,14 @@ class Faast : Notifier {
 		targets = targs;
 	}
 	void send(Notification toSend) {
-		import std.net.curl : post, HTTP;
+		import requests : postContent;
 		import std.uri;
 		import std.string;
-		auto client = HTTP();
-		client.verifyPeer(false);
 		foreach (id; targets) {
 			auto postData = ["user_credentials":id, "notification[title]":toSend.title, "notification[subtitle]":toSend.appTitle, "notification[message]":toSend.message, "notification[long_message]":toSend.message];
 			if (_APIKey != _APIKey.init)
 				postData["providerkey"] = _APIKey;
-			post("https://www.appnotifications.com/account/notifications.json", format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
+			postContent("https://www.appnotifications.com/account/notifications.json", postData);
 		}
 	}
 	@property bool needsAPIKey() {

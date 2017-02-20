@@ -12,17 +12,15 @@ class Prowl : Notifier {
 		targets = targs;
 	}
 	void send(Notification toSend) {
-		import std.net.curl : post, HTTP;
+		import requests : postContent;
 		import std.algorithm : map, clamp;
 		import std.conv : text;
 		import std.uri;
 		import std.string;
-		auto client = HTTP();
-		client.verifyPeer(false);
 		auto postData = ["apikey":targets.join(","), "event":toSend.title, "application":toSend.appTitle, "description":toSend.message, "url":toSend.url, "priority":text(clamp(toSend.priority, -2, 2))];
 		if (_APIKey != _APIKey.init)
 			postData["providerkey"] = _APIKey;
-		post("https://api.prowlapp.com/publicapi/add", format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
+		postContent("https://api.prowlapp.com/publicapi/add", postData);
 	}
 	@property bool needsAPIKey() {
 		return false;

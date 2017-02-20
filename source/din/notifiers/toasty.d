@@ -14,13 +14,13 @@ class Toasty : Notifier {
 	void send(Notification toSend) {
 		import std.uri;
 		import std.string;
-		import std.net.curl;
-		auto client = HTTP();
-		client.verifyPeer(false);
-		client.addRequestHeader("Content-Type", "multipart/form-data");
+		import requests : postContent, MultipartForm, formData;
 		foreach (id; targets) {
-			auto postData = ["title":toSend.title, "sender":toSend.appTitle, "text":toSend.message];
-			post(format("http://api.supertoasty.com/notify/%s", id), format("%(%(%c%)=%(%c%)&%)", postData).encode(), client);
+			MultipartForm form;
+			form.add(formData("title", toSend.title));
+			form.add(formData("sender", toSend.appTitle));
+			form.add(formData("text", toSend.message));
+			postContent(format("http://api.supertoasty.com/notify/%s", id),  form);
 		}
 	}
 	@property bool needsAPIKey() {

@@ -5,5 +5,12 @@
 	"authors": ["Cameron \"Herringway\" Ross"],
 	"license": "MIT",
 	"targetType": "library",
-	"homepage": "https://github.com/Herringway/din"
+	"homepage": "https://github.com/Herringway/din",
+	"dependencies": {
+		"requests": "~>0.4.0",
+		"openssl": "*"
+	},
+	"subConfigurations": {
+	    "requests": "vibed"
+	}
 }
