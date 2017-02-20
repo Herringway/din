@@ -48,10 +48,10 @@ public class Din {
 	}
 }
 package interface Notifier {
-	void send(notification toSend);
-	void setTargets(string[] targets);
-	@property bool needsAPIKey();
-	@property string apiKey(string key);
+	package void send(Notification toSend);
+	package void setTargets(string[] targets);
+	package bool needsAPIKey();
+	package string apiKey(string key);
 }
 /**
  * Struct containing notification data. Fill in as much as possible for best
@@ -60,16 +60,9 @@ package interface Notifier {
 struct Notification {
 	import std.datetime : SysTime;
 	string title;
-	deprecated alias Title = title;
 	string appTitle;
-	deprecated alias AppTitle = appTitle;
 	string message;
-	deprecated alias Message = message;
 	string url;
-	deprecated alias URL = url;
 	byte priority = 0;
-	deprecated alias Priority = priority;
 	SysTime time;
-	deprecated alias Time = time;
 }
-deprecated("Use Notification instead") alias notification = Notification;

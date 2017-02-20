@@ -5,16 +5,15 @@ private import din;
 class Toasty : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	@property string apiKey(string key) {
+	package string apiKey(string key) {
 		return _APIKey = key;
 	}
-	void setTargets(string[] targs) {
+	package void setTargets(string[] targs) {
 		targets = targs;
 	}
-	void send(Notification toSend) {
-		import std.uri;
-		import std.string;
-		import requests : postContent, MultipartForm, formData;
+	package void send(Notification toSend) {
+		import requests : formData, MultipartForm, postContent;
+		import std.format : format;
 		foreach (id; targets) {
 			MultipartForm form;
 			form.add(formData("title", toSend.title));
@@ -23,7 +22,7 @@ class Toasty : Notifier {
 			postContent(format("http://api.supertoasty.com/notify/%s", id),  form);
 		}
 	}
-	@property bool needsAPIKey() {
+	package bool needsAPIKey() {
 		return false;
 	}
 }

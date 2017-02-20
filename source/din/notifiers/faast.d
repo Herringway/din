@@ -5,16 +5,14 @@ private import din;
 class Faast : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	@property string apiKey(string key) {
+	package string apiKey(string key) {
 		return _APIKey = key;
 	}
-	void setTargets(string[] targs) {
+	package void setTargets(string[] targs) {
 		targets = targs;
 	}
-	void send(Notification toSend) {
+	package void send(Notification toSend) {
 		import requests : postContent;
-		import std.uri;
-		import std.string;
 		foreach (id; targets) {
 			auto postData = ["user_credentials":id, "notification[title]":toSend.title, "notification[subtitle]":toSend.appTitle, "notification[message]":toSend.message, "notification[long_message]":toSend.message];
 			if (_APIKey != _APIKey.init)
@@ -22,7 +20,7 @@ class Faast : Notifier {
 			postContent("https://www.appnotifications.com/account/notifications.json", postData);
 		}
 	}
-	@property bool needsAPIKey() {
+	package bool needsAPIKey() {
 		return false;
 	}
 }

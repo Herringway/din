@@ -5,19 +5,18 @@ private import din;
 class Pushover : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	@property string apiKey(string key) {
+	package string apiKey(string key) {
 		return _APIKey = key;
 	}
-	void setTargets(string[] targs) {
+	package void setTargets(string[] targs) {
 		targets = targs;
 	}
-	void send(Notification toSend) {
+	package void send(Notification toSend) {
 		import requests : postContent;
-		import std.algorithm : map, clamp;
-		import std.json;
+		import std.algorithm : clamp, map;
 		import std.conv : text;
-		import std.uri;
-		import std.string;
+		import std.json : parseJSON;
+		import std.string : join;
 		foreach (id; targets) {
 			auto postData = ["token":_APIKey, "user":id, "message":toSend.message, "priority":text(clamp(toSend.priority, -1, 2))];
 			if (toSend.time !is toSend.time.init)
@@ -29,7 +28,7 @@ class Pushover : Notifier {
 				throw new Exception("Unable to send Pushover notification: " ~ map!((a) => a.str)(json.object["errors"].array).join(", "));
 		}
 	}
-	@property bool needsAPIKey() {
+	package bool needsAPIKey() {
 		return true;
 	}
 }
