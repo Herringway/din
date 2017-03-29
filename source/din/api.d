@@ -59,6 +59,7 @@ package interface Notifier {
  */
 struct Notification {
 	import std.datetime : SysTime;
+	///Title for sent notification. Typically displayed along with the message body.
 	string title;
 	string appTitle;
 	string message;
