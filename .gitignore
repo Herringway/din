@@ -3,3 +3,5 @@ din.lib
 __test__library__.exe
 dub.selections.json
 *.a
+*.dll
+*.exe
