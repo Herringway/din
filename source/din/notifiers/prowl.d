@@ -5,13 +5,13 @@ private import din;
 class Prowl : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	package string apiKey(string key) {
+	string apiKey(string key) {
 		return _APIKey = key;
 	}
-	package void setTargets(string[] targs) {
+	void setTargets(string[] targs) {
 		targets = targs;
 	}
-	package void send(Notification toSend) {
+	void send(Notification toSend) {
 		import requests : postContent;
 		import std.algorithm : clamp, map;
 		import std.conv : text;
@@ -21,7 +21,7 @@ class Prowl : Notifier {
 			postData["providerkey"] = _APIKey;
 		postContent("https://api.prowlapp.com/publicapi/add", postData);
 	}
-	package bool needsAPIKey() {
+	bool needsAPIKey() {
 		return false;
 	}
 }

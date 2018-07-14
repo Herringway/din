@@ -48,10 +48,10 @@ public class Din {
 	}
 }
 package interface Notifier {
-	package void send(Notification toSend);
-	package void setTargets(string[] targets);
-	package bool needsAPIKey();
-	package string apiKey(string key);
+	void send(Notification toSend);
+	void setTargets(string[] targets);
+	bool needsAPIKey();
+	string apiKey(string key);
 }
 /**
  * Struct containing notification data. Fill in as much as possible for best

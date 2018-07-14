@@ -5,13 +5,13 @@ private import din;
 class Toasty : Notifier {
 	private string[] targets;
 	private string _APIKey;
-	package string apiKey(string key) {
+	string apiKey(string key) {
 		return _APIKey = key;
 	}
-	package void setTargets(string[] targs) {
+	void setTargets(string[] targs) {
 		targets = targs;
 	}
-	package void send(Notification toSend) {
+	void send(Notification toSend) {
 		import requests : formData, MultipartForm, postContent;
 		import std.format : format;
 		foreach (id; targets) {
@@ -22,7 +22,7 @@ class Toasty : Notifier {
 			postContent(format("http://api.supertoasty.com/notify/%s", id),  form);
 		}
 	}
-	package bool needsAPIKey() {
+	bool needsAPIKey() {
 		return false;
 	}
 }
