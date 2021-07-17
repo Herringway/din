@@ -7,9 +7,6 @@
 	"targetType": "library",
 	"homepage": "https://github.com/Herringway/din",
 	"dependencies": {
-		"requests": "~>0.8"
-	},
-	"subConfigurations": {
-	    "requests": "vibed"
+		"requests:vibed": "~>2.0"
 	}
 }
