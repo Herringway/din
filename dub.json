@@ -7,6 +7,6 @@
 	"targetType": "library",
 	"homepage": "https://github.com/Herringway/din",
 	"dependencies": {
-		"requests:vibed": "~>2.0"
+		"easyhttp": "~>0.7.0"
 	}
 }
