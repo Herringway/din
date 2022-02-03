@@ -7,6 +7,7 @@
 	"targetType": "library",
 	"homepage": "https://github.com/Herringway/din",
 	"dependencies": {
-		"easyhttp": "~>0.7.0"
+		"easyhttp": "~>0.7.0",
+		"easysettings": { "optional": true, "version": "~>0.0"}
 	}
 }
