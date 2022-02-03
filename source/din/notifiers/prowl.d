@@ -1,27 +1,34 @@
 module din.notifiers.prowl;
 
-private import din;
+import din;
 
 class Prowl : Notifier {
 	private string[] targets;
-	private string _APIKey;
-	string apiKey(string key) {
-		return _APIKey = key;
-	}
-	void setTargets(string[] targs) {
+	///The optional API key used to identify the appllication
+	string apiKey;
+
+	///
+	this(string[] targs) @safe {
 		targets = targs;
 	}
-	void send(Notification toSend) {
+
+	/// Send a Prowl notification
+	void send(Notification toSend) @safe {
 		import easyhttp : post, URL;
-		import std.algorithm : clamp, map;
+		import std.algorithm : clamp;
 		import std.conv : text;
 		import std.string : join;
-		auto postData = ["apikey":targets.join(","), "event":toSend.title, "application":toSend.appTitle, "description":toSend.message, "url":toSend.url, "priority":text(clamp(toSend.priority, -2, 2))];
-		if (_APIKey != _APIKey.init)
-			postData["providerkey"] = _APIKey;
+		auto postData = [
+			"apikey": targets.join(","),
+			"event": toSend.title,
+			"application": toSend.appTitle,
+			"description": toSend.message,
+			"url": toSend.url,
+			"priority": text(clamp(toSend.priority, -2, 2))
+		];
+		if (apiKey != apiKey.init) {
+			postData["providerkey"] = apiKey;
+		}
 		post(URL("https://api.prowlapp.com/publicapi/add"), postData);
-	}
-	bool needsAPIKey() {
-		return false;
 	}
 }
